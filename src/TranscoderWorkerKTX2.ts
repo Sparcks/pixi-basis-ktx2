@@ -10,8 +10,7 @@ import type { ITranscodeResponse } from './TranscoderWorkerWrapperKTX2';
  * library.
  * @memberof PIXI.KTX2Parser
  */
-export class TranscoderWorkerKTX2
-{
+export class TranscoderWorkerKTX2 {
     // IMPLEMENTATION NOTE: TranscoderWorker tracks transcoding requests with a requestID; the worker can be issued
     // multiple requests (once it is initialized) and the response contains the requestID of the triggering request. Based on
     // the response, the transcodeAsync promise is fulfilled or rejected.
@@ -25,26 +24,25 @@ export class TranscoderWorkerKTX2
     private static _onTranscoderInitializedResolve: () => void;
 
     /** a promise that when reslved means the transcoder is ready to be used */
-    public static onTranscoderInitialized = new Promise<void>((resolve) =>
-    {
+    public static onTranscoderInitialized = new Promise<void>((resolve) => {
         TranscoderWorkerKTX2._onTranscoderInitializedResolve = resolve;
     });
 
     isInit: boolean;
     load: number;
-    requests: { [id: number]: {
-        resolve: (data: ITranscodeResponse) => void,
-        reject: () => void
-    } } = {};
+    requests: {
+        [id: number]: {
+            resolve: (data: ITranscodeResponse) => void;
+            reject: () => void;
+        };
+    } = {};
 
     private static _workerURL: string;
     private static _tempID = 0;
 
     /** Generated URL for the transcoder worker script. */
-    static get workerURL(): string
-    {
-        if (!TranscoderWorkerKTX2._workerURL)
-        {
+    static get workerURL(): string {
+        if (!TranscoderWorkerKTX2._workerURL) {
             let workerSource = TranscoderWorkerWrapperKTX2.toString();
 
             const beginIndex = workerSource.indexOf('{');
@@ -52,8 +50,7 @@ export class TranscoderWorkerKTX2
 
             workerSource = workerSource.slice(beginIndex + 1, endIndex);
 
-            if (TranscoderWorkerKTX2.jsSource)
-            {
+            if (TranscoderWorkerKTX2.jsSource) {
                 workerSource = `${TranscoderWorkerKTX2.jsSource}\n${workerSource}`;
             }
 
@@ -65,16 +62,16 @@ export class TranscoderWorkerKTX2
 
     protected worker: Worker;
     protected initPromise: Promise<void>;
-    protected onInit: () => void;
+    protected onInit: () => void = () => {};
 
-    constructor()
-    {
+    constructor() {
         this.isInit = false;
         this.load = 0;
-        this.initPromise = new Promise((resolve) => { this.onInit = resolve; });
+        this.initPromise = new Promise((resolve) => {
+            this.onInit = resolve;
+        });
 
-        if (!TranscoderWorkerKTX2.wasmSource)
-        {
+        if (!TranscoderWorkerKTX2.wasmSource) {
             console.warn('resources.BasisResource.TranscoderWorker has not been given the transcoder WASM binary!');
         }
 
@@ -83,13 +80,12 @@ export class TranscoderWorkerKTX2
         this.worker.postMessage({
             type: 'init',
             jsSource: TranscoderWorkerKTX2.jsSource,
-            wasmSource: TranscoderWorkerKTX2.wasmSource
+            wasmSource: TranscoderWorkerKTX2.wasmSource,
         });
     }
 
     /** @returns a promise that is resolved when the web-worker is initialized */
-    initAsync(): Promise<void>
-    {
+    initAsync(): Promise<void> {
         return this.initPromise;
     }
 
@@ -100,20 +96,14 @@ export class TranscoderWorkerKTX2
      * @param rgbFormat - transcoding format for RGB files
      * @returns a promise that is resolved with the transcoding response of the web-worker
      */
-    async transcodeAsync(
-        basisData: Uint8Array,
-        rgbaFormat: BASIS_FORMATS,
-        rgbFormat: BASIS_FORMATS
-    ): Promise<ITranscodeResponse>
-    {
+    async transcodeAsync(basisData: Uint8Array, rgbaFormat: BASIS_FORMATS, rgbFormat: BASIS_FORMATS): Promise<ITranscodeResponse> {
         ++this.load;
 
         const requestID = TranscoderWorkerKTX2._tempID++;
-        const requestPromise = new Promise((resolve: (data: ITranscodeResponse) => void, reject: () => void) =>
-        {
+        const requestPromise = new Promise((resolve: (data: ITranscodeResponse) => void, reject: () => void) => {
             this.requests[requestID] = {
                 resolve,
-                reject
+                reject,
             };
         });
 
@@ -122,7 +112,7 @@ export class TranscoderWorkerKTX2
             basisData,
             rgbaFormat,
             rgbFormat,
-            type: 'transcode'
+            type: 'transcode',
         });
 
         return requestPromise;
@@ -132,32 +122,24 @@ export class TranscoderWorkerKTX2
      * Handles responses from the web-worker
      * @param e - a message event containing the transcoded response
      */
-    protected onMessage = (e: MessageEvent): void =>
-    {
+    protected onMessage = (e: MessageEvent): void => {
         const data = e.data as ITranscodeResponse;
 
-        if (data.type === 'init')
-        {
-            if (!data.success)
-            {
+        if (data.type === 'init') {
+            if (!data.success) {
                 throw new Error('BasisResource.TranscoderWorker failed to initialize.');
             }
 
             this.isInit = true;
             this.onInit();
-        }
-        else if (data.type === 'transcode')
-        {
+        } else if (data.type === 'transcode') {
             --this.load;
 
-            const requestID = data.requestID;
+            const requestID = data.requestID!;
 
-            if (data.success)
-            {
+            if (data.success) {
                 this.requests[requestID].resolve(data);
-            }
-            else
-            {
+            } else {
                 this.requests[requestID].reject();
             }
 
@@ -171,18 +153,19 @@ export class TranscoderWorkerKTX2
      * @param wasmURL - URL to the wasm basis transcoder
      * @returns A promise that resolves when both the js and wasm transcoders have been loaded.
      */
-    static loadTranscoder(jsURL: string, wasmURL: string): Promise<[void, void]>
-    {
+    static loadTranscoder(jsURL: string, wasmURL: string): Promise<[void, void]> {
         const jsPromise = fetch(jsURL)
             .then((res: Response) => res.text())
-            .then((text: string) => { TranscoderWorkerKTX2.jsSource = text; });
+            .then((text: string) => {
+                TranscoderWorkerKTX2.jsSource = text;
+            });
         const wasmPromise = fetch(wasmURL)
             .then((res: Response) => res.arrayBuffer())
-            .then((arrayBuffer: ArrayBuffer) => { TranscoderWorkerKTX2.wasmSource = arrayBuffer; });
+            .then((arrayBuffer: ArrayBuffer) => {
+                TranscoderWorkerKTX2.wasmSource = arrayBuffer;
+            });
 
-        return Promise.all([jsPromise, wasmPromise]).then((data) =>
-
-        {
+        return Promise.all([jsPromise, wasmPromise]).then((data) => {
             this._onTranscoderInitializedResolve();
 
             return data;
@@ -194,8 +177,7 @@ export class TranscoderWorkerKTX2
      * @param jsSource - source for the javascript basis transcoder
      * @param wasmSource - source for the wasm basis transcoder
      */
-    static setTranscoder(jsSource: string, wasmSource: ArrayBuffer): void
-    {
+    static setTranscoder(jsSource: string, wasmSource: ArrayBuffer): void {
         TranscoderWorkerKTX2.jsSource = jsSource;
         TranscoderWorkerKTX2.wasmSource = wasmSource;
     }

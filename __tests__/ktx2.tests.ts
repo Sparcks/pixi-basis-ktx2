@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 // import { KTX2Parser, loadKTX2 } from '../src';
-import { Loader } from '../assets/src/loader/Loader';
+import { Loader } from '../loaders/src/loader/Loader';
 
 // import type { Texture } from '@pixi/core';
 

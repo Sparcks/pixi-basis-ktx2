@@ -1,15 +1,12 @@
 {
-    "extends": "./tsconfig.json",
     "compilerOptions": {
         "declaration": true,
+        "declarationDir": "types",
         "emitDeclarationOnly": true,
-        "outDir": "out"
+        "esModuleInterop": true,
+        "strict": true,
+        "skipLibCheck": true
     },
-    "exclude": [
-        "node_modules",
-        "dist/**",
-        "lib/**",
-        "out/**",
-        "test/**"
-    ]
+    "include": ["src"],
+    "exclude": ["node_modules/**", "dist/**", "lib/**", "__tests__/**", "build/**", "loaders/**"]
 }

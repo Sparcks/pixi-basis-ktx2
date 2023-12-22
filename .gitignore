@@ -27,15 +27,9 @@ lerna-debug.log
 !.gitkeep
 *__temp
 node_modules
-docs
-coverage
-coverage.lcov
 .nyc_output
 dist
 lib
-*/*.d.ts
-out
-**/index.d.ts
 
 # jetBrains IDE ignores
 .idea
@@ -47,5 +41,5 @@ pixi.code-workspace
 # IntelliJ
 *.iml
 
-# webdoc api
-dist/docs/pixi.api.json
+# package build
+*.tgz

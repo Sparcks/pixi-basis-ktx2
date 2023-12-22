@@ -17,13 +17,11 @@ export const loadKTX2 = {
 
     name: 'loadKTX2',
 
-    test(url: string): boolean
-    {
+    test(url: string): boolean {
         return checkExtension(url, '.ktx2');
     },
 
-    async load(url: string, asset: ResolvedAsset, loader: Loader): Promise<Texture | Texture[]>
-    {
+    async load(url: string, asset: ResolvedAsset, loader: Loader): Promise<Texture | Texture[]> {
         await TranscoderWorkerKTX2.onTranscoderInitialized;
 
         // get an array buffer...
@@ -33,39 +31,32 @@ export const loadKTX2 = {
 
         const resources = await KTX2Parser.transcode(arrayBuffer);
 
-        const type: TYPES = BASIS_FORMAT_TO_TYPE[resources.basisFormat];
-        const format: FORMATS = resources.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
+        const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
+        const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
 
-        const textures = resources.map((resource) =>
-        {
-            const base = new BaseTexture(resource, {
-                mipmap: resource instanceof CompressedTextureResource && resource.levels > 1
-                    ? MIPMAP_MODES.ON_MANUAL
-                    : MIPMAP_MODES.OFF,
-                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
-                type,
-                format,
-                ...asset.data,
-            });
+        const textures =
+            resources?.map((resource) => {
+                const base = new BaseTexture(resource, {
+                    mipmap: resource instanceof CompressedTextureResource && resource.levels > 1 ? MIPMAP_MODES.ON_MANUAL : MIPMAP_MODES.OFF,
+                    alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
+                    type,
+                    format,
+                    ...asset.data,
+                });
 
-            return createTexture(base, loader, url);
-        });
+                return createTexture(base, loader, url);
+            }) ?? [];
 
         return textures.length === 1 ? textures[0] : textures;
     },
 
-    unload(texture): void
-    {
-        if (Array.isArray(texture))
-        {
+    unload(texture): void {
+        if (Array.isArray(texture)) {
             texture.forEach((t) => t.destroy(true));
-        }
-        else
-        {
+        } else {
             texture.destroy(true);
         }
-    }
-
+    },
 } as LoaderParser<Texture | Texture[], IBaseTextureOptions>;
 
 extensions.add(loadKTX2);
