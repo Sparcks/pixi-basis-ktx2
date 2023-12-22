@@ -55,8 +55,8 @@ const config: Configuration = {
                         unused: true,
                     },
                     mangle: false,
-                    format: {
-                        comments: 'all',
+                    output: {
+                        beautify: true,
                     },
                 },
             }),

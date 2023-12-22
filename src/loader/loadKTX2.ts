@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { checkExtension, createTexture, LoaderParserPriority } from '@pixi/assets';
 import { CompressedTextureResource } from '@pixi/compressed-textures';
 import { ALPHA_MODES, BaseTexture, extensions, ExtensionType, FORMATS, MIPMAP_MODES, settings } from '@pixi/core';

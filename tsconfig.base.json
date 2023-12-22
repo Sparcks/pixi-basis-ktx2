@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "rootDir": "./src",
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "checkJs": true,
+        "allowJs": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["src/**/*"]
+}

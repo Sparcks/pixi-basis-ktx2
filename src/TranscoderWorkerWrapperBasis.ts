@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CompressedLevelBuffer } from '@pixi/compressed-textures';
 import type { BASIS, BASIS_FORMATS, BasisBinding } from './Basis';
@@ -82,7 +85,7 @@ export function TranscoderWorkerWrapperBasis(): void {
                 };
             }
 
-            self.BASIS({ wasmBinary: message.wasmSource }).then((basisLibrary) => {
+            void self.BASIS({ wasmBinary: message.wasmSource }).then((basisLibrary) => {
                 basisLibrary.initializeBasis();
                 basisBinding = basisLibrary;
 

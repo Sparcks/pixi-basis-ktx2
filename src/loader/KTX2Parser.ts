@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CompressedTextureResource } from '@pixi/compressed-textures';
 import { BufferResource, settings, TYPES } from '@pixi/core';
 import { BASIS_FORMAT_TO_INTERNAL_FORMAT, BASIS_FORMATS, BASIS_FORMATS_ALPHA, INTERNAL_FORMAT_TO_BASIS_FORMAT } from '../Basis';
@@ -106,7 +109,7 @@ export class KTX2Parser {
         const imageArray = response.imageArray!;
 
         // whether it is an uncompressed format
-        const fallbackMode = basisFormat > 12;
+        const fallbackMode = Number(basisFormat) > 12;
         let imageResources: TranscodedResourcesArray;
 
         if (!fallbackMode) {
@@ -299,7 +302,6 @@ export class KTX2Parser {
         const supportedFormats: { [id: string]: INTERNAL_FORMATS } = {};
 
         for (const key in extensions) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const extension = (extensions as any)[key];
 
             if (!extension) {
@@ -393,7 +395,7 @@ export class KTX2Parser {
         // TODO: Destroy workers?
         for (let i = this.workerPool.length; i < limit; i++) {
             this.workerPool[i] = new TranscoderWorkerKTX2();
-            this.workerPool[i].initAsync();
+            void this.workerPool[i].initAsync();
         }
     }
 }

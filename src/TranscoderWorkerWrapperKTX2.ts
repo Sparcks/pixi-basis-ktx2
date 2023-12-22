@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CompressedLevelBuffer } from '@pixi/compressed-textures';
 import type { BASIS_FORMATS, BasisBinding } from './Basis';
@@ -77,7 +80,7 @@ export function TranscoderWorkerWrapperKTX2(): void {
                 };
             }
 
-            self.BASIS({ wasmBinary: message.wasmSource }).then((basisLibrary) => {
+            void self.BASIS({ wasmBinary: message.wasmSource }).then((basisLibrary) => {
                 basisLibrary.initializeBasis();
                 KTX2Binding = basisLibrary;
 

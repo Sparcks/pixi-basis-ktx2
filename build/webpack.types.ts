@@ -26,10 +26,10 @@ const config: Configuration = {
     context: Path.join(__dirname, '..', 'src'),
     entry: getEntries(),
     output: {
-        path: Path.resolve(__dirname, '..', 'lib'),
+        path: Path.resolve(__dirname, '..', 'types2'),
     },
     resolve: {
-        extensions: ['.ts', '.js', '.d.ts'],
+        extensions: ['.ts'],
     },
     module: {
         rules: [
@@ -39,6 +39,7 @@ const config: Configuration = {
                 exclude: /node_modules/,
                 options: {
                     configFile: 'tsconfig.types.json',
+                    compilerOptions: { noEmit: false },
                 },
             },
         ],

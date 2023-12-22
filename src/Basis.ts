@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { INTERNAL_FORMATS } from '@pixi/compressed-textures';
 import { TYPES } from '@pixi/core';
@@ -69,7 +72,7 @@ export const BASIS_FORMAT_TO_TYPE: { [id: number]: TYPES } = {
  * Maps {@link PIXI.INTERNAL_FORMATS} to {@link BASIS_FORMATS}
  * @ignore
  */
-export const INTERNAL_FORMAT_TO_BASIS_FORMAT: { [id: number]: number } = (Object.keys(BASIS_FORMAT_TO_INTERNAL_FORMAT) as string[])
+export const INTERNAL_FORMAT_TO_BASIS_FORMAT: { [id: number]: number } = Object.keys(BASIS_FORMAT_TO_INTERNAL_FORMAT)
     .map((key: string) => Number(key))
     .reduce((reverseMap: any, basisFormat: any) => {
         reverseMap[(BASIS_FORMAT_TO_INTERNAL_FORMAT as any)[basisFormat]] = basisFormat;

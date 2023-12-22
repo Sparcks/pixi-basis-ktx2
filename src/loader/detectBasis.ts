@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 import { extensions, ExtensionType } from '@pixi/core';
 import { BasisParser } from './BasisParser';
 
