@@ -109,7 +109,7 @@
         "tree-kill": "^1.2.2",
         "ts-jest": "^26.5.6",
         "ts-loader": "^9.5.1",
-        "ts-node": "^9.1.1",
+        "ts-node": "^10.9.2",
         "tsconfig-paths": "^3.10.1",
         "typescript": "^5.3.3",
         "typescript-declaration-webpack-plugin": "^0.3.0",
