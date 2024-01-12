@@ -29,7 +29,7 @@ module.exports = {
             extends: ['plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/recommended-requiring-type-checking'],
 
             parserOptions: {
-                project: ['./tsconfig.base.json'], // Specify it only for TypeScript files
+                project: ['./tsconfig.eslint.json'], // Specify it only for TypeScript files
             },
         },
     ],
@@ -39,6 +39,6 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: ['@typescript-eslint'],
-    ignorePatterns: ['node_modules/**', 'dist/**', 'lib/**', 'assets/**', 'types/**'],
+    ignorePatterns: ['node_modules/**', 'dist/**', 'lib/**', 'assets/**', 'types/**', 'loaders/**', 'build/**', '__tests__/**'],
     rules: {},
 };

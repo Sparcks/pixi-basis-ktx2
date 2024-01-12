@@ -85,7 +85,7 @@ class WorkerManagerClass
         [key: string]: {
             resolve: (...param: any[]) => void;
             reject: (...param: any[]) => void;
-        }
+        } | null
     };
     private readonly workerPool: Worker[];
     private readonly queue: {
@@ -139,7 +139,7 @@ class WorkerManagerClass
         this._initialized = true;
     }
 
-    private getWorker(): Worker
+    private getWorker(): Worker | undefined
     {
         if (MAX_WORKERS === undefined)
         {
@@ -179,11 +179,11 @@ class WorkerManagerClass
     {
         if (data.error !== undefined)
         {
-            this.resolveHash[data.uuid].reject(data.error);
+            this.resolveHash[data.uuid]?.reject(data.error);
         }
         else
         {
-            this.resolveHash[data.uuid].resolve(data.data);
+            this.resolveHash[data.uuid]?.resolve(data.data);
         }
 
         this.resolveHash[data.uuid] = null;
@@ -217,7 +217,7 @@ class WorkerManagerClass
             return;
         }
 
-        const toDo = this.queue.pop();
+        const toDo = this.queue.pop()!;
 
         const id = toDo.id;
 

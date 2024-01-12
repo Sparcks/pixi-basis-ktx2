@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 // import { KTX2Parser, loadKTX2 } from '../src';
 import { Loader } from '../loaders/src/loader/Loader';
 
@@ -8,10 +7,8 @@ import { Loader } from '../loaders/src/loader/Loader';
 // const loaderWASM = 'https://raw.githubusercontent.com/BinomialLLC/basis_universal/master/webgl/transcoder/build/basis_transcoder.wasm';
 // const ktx2Texture = 'https://github.com/Sparcks/pixijs/raw/feature/load-ktx2/packages/basis/test/images/kodim20.ktx2';
 
-describe('KTX2 loading', () =>
-{
-    it('should load a KTX2 image', async () =>
-    {
+describe('KTX2 loading', () => {
+    it('should load a KTX2 image', async () => {
         // await KTX2Parser.loadTranscoder(loaderJS, loaderWASM);
         const loader = new Loader();
         expect(loader !== undefined).toBe(true);

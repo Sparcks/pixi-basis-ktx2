@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 // import { BasisParser, loadBasis } from '../src';
 import { Loader } from '../loaders/src/loader/Loader';
 
@@ -8,10 +7,8 @@ import { Loader } from '../loaders/src/loader/Loader';
 // const loaderWASM = 'https://raw.githubusercontent.com/BinomialLLC/basis_universal/master/webgl/transcoder/build/basis_transcoder.wasm';
 // const basisTexture = 'https://github.com/Sparcks/pixijs/raw/feature/load-ktx2/packages/basis/test/images/kodim20.basis';
 
-describe('Basis loading', () =>
-{
-    it('should load a Basis image', async () =>
-    {
+describe('Basis loading', () => {
+    it('should load a Basis image', async () => {
         // await BasisParser.loadTranscoder(loaderJS, loaderWASM);
         const loader = new Loader();
         expect(loader !== undefined).toBe(true);
