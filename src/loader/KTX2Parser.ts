@@ -8,6 +8,7 @@ import { TranscoderWorkerKTX2 } from '../TranscoderWorkerKTX2';
 
 import type { CompressedLevelBuffer, INTERNAL_FORMATS } from '@pixi/compressed-textures';
 import type { BasisBinding, BasisTextureExtensions, TranscodedResourcesArray } from '../Basis';
+import { ITranscodeResponse } from '../TranscoderWorkerInterfaces';
 
 /**
  * Loader plugin for handling KTX2 supercompressed texture files.
@@ -99,18 +100,18 @@ export class KTX2Parser {
         // Wait until worker is ready
         await worker.initAsync();
 
-        const response = await worker.transcodeAsync(
+        const response: ITranscodeResponse = await worker.transcodeAsync(
             new Uint8Array(arrayBuffer),
             KTX2Parser.defaultRGBAFormat.basisFormat,
             KTX2Parser.defaultRGBFormat.basisFormat
         );
 
-        const basisFormat = response.basisFormat!;
-        const imageArray = response.imageArray!;
+        const basisFormat = response.basisFormat ?? 13;
+        const imageArray = response.imageArray ?? [];
 
         // whether it is an uncompressed format
         const fallbackMode = Number(basisFormat) > 12;
-        let imageResources: TranscodedResourcesArray;
+        let imageResources: TranscodedResourcesArray | null;
 
         if (!fallbackMode) {
             const format = BASIS_FORMAT_TO_INTERNAL_FORMAT[response.basisFormat!];

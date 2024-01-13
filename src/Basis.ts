@@ -203,3 +203,9 @@ export type BasisBinding = {
  * @ignore
  */
 export type BASIS = (opts?: { wasmBinary: ArrayBuffer }) => Promise<BasisBinding>;
+
+declare global {
+    interface Window {
+        BASIS: BASIS;
+    }
+}

@@ -7,6 +7,7 @@ import { BASIS_FORMAT_TO_INTERNAL_FORMAT, BASIS_FORMATS, BASIS_FORMATS_ALPHA, IN
 import { TranscoderWorkerBasis } from '../TranscoderWorkerBasis';
 import type { BasisBinding, BasisTextureExtensions, TranscodedResourcesArray } from '../Basis';
 import type { CompressedLevelBuffer, INTERNAL_FORMATS } from '@pixi/compressed-textures';
+import { ITranscodeResponse } from '../TranscoderWorkerInterfaces';
 
 /**
  * Loader plugin for handling BASIS supercompressed texture files.
@@ -98,7 +99,7 @@ export class BasisParser {
         // Wait until worker is ready
         await worker.initAsync();
 
-        const response = await worker.transcodeAsync(
+        const response: ITranscodeResponse = await worker.transcodeAsync(
             new Uint8Array(arrayBuffer),
             BasisParser.defaultRGBAFormat.basisFormat,
             BasisParser.defaultRGBFormat.basisFormat

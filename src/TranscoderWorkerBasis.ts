@@ -1,7 +1,7 @@
 import { TranscoderWorkerWrapperBasis } from './TranscoderWorkerWrapperBasis';
 
 import type { BASIS_FORMATS } from './Basis';
-import type { ITranscodeResponse } from './TranscoderWorkerWrapperBasis';
+import { ITranscodeResponse } from './TranscoderWorkerInterfaces';
 
 /**
  * Worker class for transcoding *.basis files in background threads.
@@ -14,9 +14,6 @@ export class TranscoderWorkerBasis {
     // IMPLEMENTATION NOTE: TranscoderWorker tracks transcoding requests with a requestID; the worker can be issued
     // multiple requests (once it is initialized) and the response contains the requestID of the triggering request. Based on
     // the response, the transcodeAsync promise is fulfilled or rejected.
-
-    // TODO: Publish our own pixi-basis-ktx2 package & set default URL to jsdelivr/cdnjs
-    /** URL for the script containing the basis_universal library. */
     static bindingURL: string;
     static jsSource: string;
     static wasmSource: ArrayBuffer;

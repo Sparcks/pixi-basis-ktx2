@@ -2,59 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CompressedLevelBuffer } from '@pixi/compressed-textures';
-import type { BASIS_FORMATS, BasisBinding } from './Basis';
-
-/**
- * Initialization message sent by the main thread.
- * @ignore
- */
-export interface IInitializeTranscoderMessage {
-    wasmSource: ArrayBuffer;
-    type: 'init';
-}
-
-/**
- * Request parameters for transcoding basis files. It only supports transcoding all of the basis file at once.
- * @ignore
- */
-export interface ITranscodeMessage {
-    requestID?: number;
-    rgbFormat: number;
-    rgbaFormat?: number;
-    basisData?: Uint8Array;
-    type: 'transcode';
-}
-
-/** @ignore */
-export interface ITranscodedImage {
-    imageID: number;
-    levelArray: Array<{
-        levelID: number;
-        levelWidth: number;
-        levelHeight: number;
-        levelBuffer: Uint8Array;
-    }>;
-    width?: number;
-    height?: number;
-}
-
-/**
- * Response format for {@link TranscoderWorker}.
- * @ignore
- */
-export interface ITranscodeResponse {
-    type: 'init' | 'transcode';
-    requestID?: number;
-    success: boolean;
-    basisFormat?: BASIS_FORMATS;
-    imageArray?: Array<{
-        imageID: number;
-        levelArray: Array<CompressedLevelBuffer>;
-        width: number;
-        height: number;
-    }>;
-}
+import type { BasisBinding } from './Basis';
+import { IInitializeTranscoderMessage, ITranscodeMessage, ITranscodeResponse, ITranscodedImage } from './TranscoderWorkerInterfaces';
 
 /**
  * This wraps the transcoder web-worker functionality; it can be converted into a string to get the source code. It expects
@@ -70,7 +19,6 @@ export function TranscoderWorkerWrapperKTX2(): void {
 
     const messageHandlers = {
         init: (message: IInitializeTranscoderMessage): ITranscodeResponse | null => {
-            // Already created global in 'pixi-basis-ktx2'.
             if (!self.BASIS) {
                 console.warn('jsSource was not prepended?');
 
