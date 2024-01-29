@@ -13,14 +13,19 @@ npm install pixi-basis-ktx2
 Import loadKTX2 and/or loadBasis it into your class and add them as pixi loader parser (Typescript example):
 
 ```ts
-import {loadKTX2, loadBasis} from 'pixi-basis-ktx2';
+import {loadKTX2, loadBasis, detectKTX2, detectBasis, resolveKTX2TextureUrl } from 'pixi-basis-ktx2';
 import * as Pixi from 'pixi.js';
 
 constructor() {
+    // Adding needed parsers & detections
     // KTX2
     Pixi.Assets.loader.parsers.push(loadKTX2);
+    Pixi.Assets.detections.push(detectKTX2);
+    Pixi.Assets.resolver.parsers.push(resolveKTX2TextureUrl);
     // Basis
     Pixi.Assets.loader.parsers.push(loadBasis);
+    Pixi.Assets.detections.push(detectBasis);
+    //Pixi already added .basis in compressed textures resolver
 }
 ```
 

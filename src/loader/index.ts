@@ -4,3 +4,4 @@ export * from './detectKTX2';
 export * from './KTX2Parser';
 export * from './loadBasis';
 export * from './loadKTX2';
+export * from './resolveKTX2TextureUrl';

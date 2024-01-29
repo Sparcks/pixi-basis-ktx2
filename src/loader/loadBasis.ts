@@ -61,3 +61,47 @@ export const loadBasis = {
 } as LoaderParser<Texture | Texture[], IBaseTextureOptions>;
 
 extensions.add(loadBasis);
+
+export async function loadBufferToTexture(byteArr: Uint8Array, path: string, asset: ResolvedAsset, loader: Loader): Promise<Texture> {
+    await TranscoderWorkerBasis.onTranscoderInitialized;
+    const resources = await BasisParser.transcode(byteArr.buffer);
+    const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
+    const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
+
+    const textures =
+        resources?.map((resource) => {
+            const base = new BaseTexture(resource, {
+                mipmap: resource instanceof CompressedTextureResource && resource.levels > 1 ? MIPMAP_MODES.ON_MANUAL : MIPMAP_MODES.OFF,
+                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
+                type,
+                format,
+                ...asset.data,
+            });
+            const texture = createTexture(base, loader, path);
+            return texture;
+        }) ?? [];
+
+    return textures[0];
+}
+
+export async function loadBasisBufferToArray(byteArr: Uint8Array, path: string, asset: ResolvedAsset, loader: Loader): Promise<Texture[]> {
+    await TranscoderWorkerBasis.onTranscoderInitialized;
+    const resources = await BasisParser.transcode(byteArr.buffer);
+    const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
+    const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
+
+    const textures =
+        resources?.map((resource) => {
+            const base = new BaseTexture(resource, {
+                mipmap: resource instanceof CompressedTextureResource && resource.levels > 1 ? MIPMAP_MODES.ON_MANUAL : MIPMAP_MODES.OFF,
+                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
+                type,
+                format,
+                ...asset.data,
+            });
+            const texture = createTexture(base, loader, path);
+            return texture;
+        }) ?? [];
+
+    return textures;
+}

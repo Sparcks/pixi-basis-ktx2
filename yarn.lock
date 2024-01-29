@@ -1115,11 +1115,6 @@
   resolved "https://registry.yarnpkg.com/@pixi/extensions/-/extensions-7.3.3.tgz#befa5b4f574a08d8a1386fac9de65c9db4564550"
   integrity sha512-Of44Wde0ZHYCuMoDLFl/8SOSPV2NiDBUB6QKBvYvNdhVslbO3pxrn9oQH9Fmsd8iGcGJ/YtyI5H2T/ky4Bo6AQ==
 
-"@pixi/loaders@^6.5.10":
-  version "6.5.10"
-  resolved "https://registry.yarnpkg.com/@pixi/loaders/-/loaders-6.5.10.tgz#7d7bdc1686eae2842e4d701abd4b480f9fcd5930"
-  integrity sha512-AuK7mXBmyVsDFL9DDFPB8sqP8fwQ2NOktvu98bQuJl0/p/UeK/0OAQnF3wcf3FeBv5YGXfNHL21c2DCisjKfTg==
-
 "@pixi/math@7.3.3":
   version "7.3.3"
   resolved "https://registry.yarnpkg.com/@pixi/math/-/math-7.3.3.tgz#2cd64bcc33b63dbbf6abd6af5db85aa1191b6011"
