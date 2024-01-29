@@ -62,7 +62,7 @@ export const loadBasis = {
 
 extensions.add(loadBasis);
 
-export async function loadBufferToTexture(byteArr: Uint8Array, path: string, asset: ResolvedAsset, loader: Loader): Promise<Texture> {
+export async function loadBasisBufferToTexture(byteArr: Uint8Array, path: string, asset: ResolvedAsset, loader: Loader): Promise<Texture> {
     await TranscoderWorkerBasis.onTranscoderInitialized;
     const resources = await BasisParser.transcode(byteArr.buffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
