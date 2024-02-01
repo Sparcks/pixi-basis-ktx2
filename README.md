@@ -42,14 +42,31 @@ private async init(): Promise<void> {
 }
 ```
 
-Load your .ktx2 and/or .basis file as Pixi Texture (Typescript example):
+Load your .ktx2 and/or .basis file as Pixi Texture with Asset.load (Typescript example):
 
 ```ts
+import * as Pixi from 'pixi.js';
+
 private async loadTexture(): Promise<void> {
     // KTX2
     const textureKTXTwo = (await Pixi.Assets.load('YOUR_PATH_TO/image.ktx2')) as Pixi.Texture;
     // Basis
     const textureBasis = (await Pixi.Assets.load('YOUR_PATH_TO/image.basis')) as Pixi.Texture;
+}
+```
+
+Load your .ktx2 and/or .basis array buffer data as Pixi Texture (Typescript example):
+
+```ts
+import * as Pixi from 'pixi.js';
+
+private async loadTextureFromBuffer(byteArr: Uint8Array, fileName: string): Promise<void> {
+    // KTX2
+    const textureKTXTwo = loadKTX2BufferToTexture(byteArr, fileName, Pixi.Assets.loader); // Texture
+    const textureKTXTwoArr = loadKTX2BufferToArray(byteArr, fileName, Pixi.Assets.loader); // Texture[]
+    // Basis
+    const textureBasis = loadBasisBufferToTexture(byteArr, fileName, Pixi.Assets.loader); // Texture
+    const textureBasisArr = loadKTX2BufferToArray(byteArr, fileName, Pixi.Assets.loader); // Texture[]
 }
 ```
 

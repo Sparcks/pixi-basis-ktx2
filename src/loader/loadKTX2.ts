@@ -62,29 +62,25 @@ export const loadKTX2 = {
 
 extensions.add(loadKTX2);
 
-export async function loadKTX2BufferToTexture(byteArr: Uint8Array, path: string, asset: ResolvedAsset, loader: Loader): Promise<Texture> {
+export async function loadKTX2BufferToTexture(byteArr: Uint8Array, fileName: string, loader: Loader): Promise<Texture | undefined> {
     await TranscoderWorkerKTX2.onTranscoderInitialized;
     const resources = await KTX2Parser.transcode(byteArr.buffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
     const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
+    if (!resources || !resources[0]) return undefined;
 
-    const textures =
-        resources?.map((resource) => {
-            const base = new BaseTexture(resource, {
-                mipmap: resource instanceof CompressedTextureResource && resource.levels > 1 ? MIPMAP_MODES.ON_MANUAL : MIPMAP_MODES.OFF,
-                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
-                type,
-                format,
-                ...asset.data,
-            });
-            const texture = createTexture(base, loader, path);
-            return texture;
-        }) ?? [];
-
-    return textures[0];
+    const mainResource = resources[0];
+    const base = new BaseTexture(mainResource, {
+        mipmap: mainResource instanceof CompressedTextureResource && mainResource.levels > 1 ? MIPMAP_MODES.ON_MANUAL : MIPMAP_MODES.OFF,
+        alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
+        type,
+        format,
+    });
+    const texture = createTexture(base, loader, fileName);
+    return texture;
 }
 
-export async function loadKTX2BufferToArray(byteArr: Uint8Array, path: string, asset: ResolvedAsset, loader: Loader): Promise<Texture[]> {
+export async function loadKTX2BufferToArray(byteArr: Uint8Array, fileName: string, loader: Loader): Promise<Texture[]> {
     await TranscoderWorkerKTX2.onTranscoderInitialized;
     const resources = await KTX2Parser.transcode(byteArr.buffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
@@ -97,9 +93,8 @@ export async function loadKTX2BufferToArray(byteArr: Uint8Array, path: string, a
                 alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
                 type,
                 format,
-                ...asset.data,
             });
-            const texture = createTexture(base, loader, path);
+            const texture = createTexture(base, loader, fileName);
             return texture;
         }) ?? [];
 
