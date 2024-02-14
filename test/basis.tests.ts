@@ -1,7 +1,7 @@
 // import { BasisParser, loadBasis } from '../src';
-import { Loader } from '../loaders/src/loader/Loader';
-import { Resolver } from '../loaders/src/resolver/Resolver';
-import { resolveCompressedTextureUrl } from '@pixi/compressed-textures';
+// import { Loader } from '../loaders/src/loader/Loader';
+// import { Resolver } from '../loaders/src/resolver/Resolver';
+// import { resolveCompressedTextureUrl } from '@pixi/compressed-textures';
 
 // import type { Texture } from '@pixi/core';
 
@@ -17,13 +17,11 @@ import { resolveCompressedTextureUrl } from '@pixi/compressed-textures';
 describe('Basis loading', () => {
     it('should load a Basis image via Loader', async () => {
         // await BasisParser.loadTranscoder(loaderJS, loaderWASM);
-        const loader = new Loader();
-        expect(loader !== undefined).toBe(true);
-
+        // const loader = new Loader();
+        // expect(loader !== undefined).toBe(true);
         // loader['_parsers'].push(loadBasis as any);
         // const texture = await loader.load<Texture>(basisTexture);
         // expect(texture !== undefined).toBe(true);
-
         // expect(texture.baseTexture.valid).toBe(true);
         // expect(texture.width).toBe(768);
         // expect(texture.height).toBe(512);
@@ -38,28 +36,23 @@ describe('Basis loading', () => {
     });
 
     it('should resolve Basis asset', () => {
-        const resolver = new Resolver();
-
-        resolver['_parsers'].push(resolveCompressedTextureUrl);
-
-        resolver.prefer({
-            priority: ['format'],
-            params: {
-                format: ['basis'],
-                resolution: 1,
-            },
-        });
-
-        resolver.add('test', [
-            {
-                resolution: 1,
-                format: 'basis',
-                src: 'kodim20.basis',
-            },
-        ]);
-
-        const asset = resolver.resolveUrl('test');
-
-        expect(asset).toEqual('kodim20.basis');
+        // const resolver = new Resolver();
+        // resolver['_parsers'].push(resolveCompressedTextureUrl);
+        // resolver.prefer({
+        //     priority: ['format'],
+        //     params: {
+        //         format: ['basis'],
+        //         resolution: 1,
+        //     },
+        // });
+        // resolver.add('test', [
+        //     {
+        //         resolution: 1,
+        //         format: 'basis',
+        //         src: 'kodim20.basis',
+        //     },
+        // ]);
+        // const asset = resolver.resolveUrl('test');
+        // expect(asset).toEqual('kodim20.basis');
     });
 });

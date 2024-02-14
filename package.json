@@ -1,6 +1,6 @@
 {
     "name": "pixi-basis-ktx2",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "description": "Loader for the *.basis & *.ktx2 supercompressed texture file format. This package also ships with the transcoder!",
     "main": "lib/cjs/index.js",
     "module": "lib/esm/index.js",
@@ -33,7 +33,7 @@
     },
     "scripts": {
         "test": "jest",
-        "clean": "run-s clean:*",
+        "clean": "yarn clean:dist && yarn clean:lib",
         "clean:dist": "rimraf dist",
         "clean:lib": "rimraf lib",
         "lint": "yarn eslint src/",
@@ -42,7 +42,7 @@
         "build:dev:min": "cross-env NODE_ENV=development MINIFY=true webpack --config build/webpack.dev.ts",
         "build:esm": "tsc -p ./tsconfig.esm.json",
         "build:cjs": "tsc -p ./tsconfig.cjs.json",
-        "publish:npm": "yarn lint && yarn test && yarn clean && yarn build && yarn pack && yarn publish"
+        "publish:npm": "yarn lint && yarn test && yarn clean && yarn build && yarn pack && yarn npm publish"
     },
     "repository": {
         "type": "git",
@@ -62,23 +62,14 @@
     },
     "homepage": "https://github.com/Sparcks/pixi-basis-ktx2#readme",
     "dependencies": {
-        "@pixi/assets": "^7.3.3",
-        "@pixi/compressed-textures": "^7.3.3",
-        "@pixi/core": "^7.3.3"
+        "pixi.js": "^7.x.x"
     },
     "devDependencies": {
-        "@pixi/eslint-config": "^4.0.1",
-        "@pixi/webdoc-template": "^1.5.5",
-        "@rollup/plugin-alias": "^5.0.0",
-        "@rollup/plugin-commonjs": "^25.0.0",
-        "@rollup/plugin-json": "^6.0.0",
-        "@rollup/plugin-node-resolve": "^15.1.0",
         "@types/inquirer": "^8.0.0",
         "@types/jest": "^26.0.24",
         "@types/node": "^20.10.5",
         "@typescript-eslint/eslint-plugin": "^6.15.0",
         "@typescript-eslint/parser": "^6.15.0",
-        "@webdoc/cli": "^2.2.0",
         "clean-webpack-plugin": "^4.0.0",
         "copyfiles": "^2.1.0",
         "cross-env": "^5.2.0",
@@ -101,9 +92,6 @@
         "npm-run-all": "^4.1.5",
         "pre-commit": "^1.2.2",
         "rimraf": "^2.6.3",
-        "rollup": "^3.0.0",
-        "rollup-plugin-esbuild": "^5.0.0",
-        "rollup-plugin-string": "^3.0.0",
         "semver": "^7.3.8",
         "terser": "^5.26.0",
         "terser-webpack-plugin": "^5.3.9",
