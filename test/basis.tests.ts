@@ -1,5 +1,5 @@
 // import { BasisParser, loadBasis } from '../src';
-// import { Loader } from '../loaders/src/loader/Loader';
+import { Loader } from '../loaders/src/loader/Loader';
 // import { Resolver } from '../loaders/src/resolver/Resolver';
 // import { resolveCompressedTextureUrl } from '@pixi/compressed-textures';
 
@@ -15,10 +15,32 @@
 //     : 'http://localhost:8080/test/images/';
 
 describe('Basis loading', () => {
+    beforeAll(() => {
+        window.URL.createObjectURL = function () {
+            return '';
+        };
+        if (typeof Worker === 'undefined') {
+            global.Worker = class {
+                addEventListener() {}
+                removeEventListener() {}
+                dispatchEvent() {
+                    return false;
+                }
+
+                onmessage() {}
+                onmessageerror() {}
+                onerror() {}
+                postMessage() {}
+                terminate() {}
+            };
+        }
+    });
+
     it('should load a Basis image via Loader', async () => {
         // await BasisParser.loadTranscoder(loaderJS, loaderWASM);
-        // const loader = new Loader();
-        // expect(loader !== undefined).toBe(true);
+        const loader = new Loader();
+        expect(loader !== undefined).toBe(true);
+
         // loader['_parsers'].push(loadBasis as any);
         // const texture = await loader.load<Texture>(basisTexture);
         // expect(texture !== undefined).toBe(true);

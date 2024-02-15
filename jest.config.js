@@ -1,5 +1,7 @@
-module.exports = {
+const config = {
     preset: 'ts-jest',
-    testEnvironment: 'node',
+    testEnvironment: 'jsdom',
     testMatch: ['**/test/**', '!**/src/**'],
 };
+
+module.exports = config;

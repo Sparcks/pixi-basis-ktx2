@@ -49,15 +49,42 @@ import * as Pixi from 'pixi.js';
 
 private async loadTexture(): Promise<void> {
     // KTX2
-    const textureKTXTwo = (await Pixi.Assets.load('YOUR_PATH_TO/image.ktx2')) as Pixi.Texture;
+    const textureKTXTwo = (await Pixi.Assets.load<Pixi.Texture>('YOUR_PATH_TO/image.ktx2'));
     // Basis
-    const textureBasis = (await Pixi.Assets.load('YOUR_PATH_TO/image.basis')) as Pixi.Texture;
+    const textureBasis = (await Pixi.Assets.load<Pixi.Texture>('YOUR_PATH_TO/image.basis'));
+}
+```
+
+Load your .ktx2 and/or .basis file as Pixi AnimationSprite with Asset.load (Typescript example):
+
+```ts
+import * as Pixi from 'pixi.js';
+
+private async loadSpriteAnimation(): Promise<void> {
+    // KTX2
+    const spritePaths = ["path/image1.ktx2", "path/image2.ktx2"];
+    const textureArray: Pixi.Texture[] = [];
+    for (let i = 0; i < spritePaths.length; i++) {
+        const textureKTXTwo = new Pixi.Texture((await Pixi.Assets.load<Pixi.BaseTexture>(spritePaths[i])));
+        textureArray.push(textureKTXTwo);
+    }
+    const spriteAnim = new Pixi.AnimatedSprite(textureArray);
+
+    // Basis
+    const spritePaths = ["path/image1.basis", "path/image2.basis"];
+    const textureArray: Pixi.Texture[] = [];
+    for (let i = 0; i < spritePaths.length; i++) {
+        const textureBasis = new Pixi.Texture((await Pixi.Assets.load<Pixi.BaseTexture>(spritePaths[i])));
+        textureArray.push(textureBasis);
+    }
+    const spriteAnim = new Pixi.AnimatedSprite(textureArray);
 }
 ```
 
 Load your .ktx2 and/or .basis array buffer data as Pixi Texture (Typescript example):
 
 ```ts
+import { loadKTX2BufferToTexture, loadKTX2BufferToArray, loadBasisBufferToTexture, loadKTX2BufferToArray } from 'pixi-basis-ktx2';
 import * as Pixi from 'pixi.js';
 
 private async loadTextureFromBuffer(byteArr: Uint8Array, fileName: string): Promise<void> {

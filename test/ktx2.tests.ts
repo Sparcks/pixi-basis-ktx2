@@ -1,5 +1,5 @@
 // import { KTX2Parser, loadKTX2 } from '../src';
-// import { Loader } from '../loaders/src/loader/Loader';
+import { Loader } from '../loaders/src/loader/Loader';
 // import { Resolver } from '../loaders/src/resolver/Resolver';
 // import { resolveKTX2TextureUrl } from '../src/loader/resolveKTX2TextureUrl';
 
@@ -15,10 +15,32 @@
 //     : 'http://localhost:8080/test/images/';
 
 describe('KTX2 loading', () => {
+    beforeAll(() => {
+        window.URL.createObjectURL = function () {
+            return '';
+        };
+        if (typeof Worker === 'undefined') {
+            global.Worker = class {
+                addEventListener() {}
+                removeEventListener() {}
+                dispatchEvent() {
+                    return false;
+                }
+
+                onmessage() {}
+                onmessageerror() {}
+                onerror() {}
+                postMessage() {}
+                terminate() {}
+            };
+        }
+    });
+
     it('should load a KTX2 image via Loader', async () => {
         // await KTX2Parser.loadTranscoder(loaderJS, loaderWASM);
-        // const loader = new Loader();
-        // expect(loader !== undefined).toBe(true);
+        const loader = new Loader();
+        expect(loader !== undefined).toBe(true);
+
         // loader['_parsers'].push(loadKTX2 as any);
         // const texture = await loader.load<Texture>(ktx2Texture);
         // expect(texture !== undefined).toBe(true);
