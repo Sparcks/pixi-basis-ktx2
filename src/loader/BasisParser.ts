@@ -257,6 +257,7 @@ export class BasisParser {
      */
     static autoDetectFormats(extensions?: Partial<BasisTextureExtensions>): void {
         // Auto-detect WebGL compressed-texture extensions
+        console.log('autoDetectFormats', extensions);
         if (!extensions) {
             const canvas = settings.ADAPTER.createCanvas();
             const gl = canvas.getContext('webgl');
@@ -268,14 +269,14 @@ export class BasisParser {
             }
 
             extensions = {
-                s3tc: gl.getExtension('WEBGL_compressed_texture_s3tc') ?? undefined,
-                // eslint-disable-next-line max-len, camelcase
-                s3tc_sRGB: gl.getExtension('WEBGL_compressed_texture_s3tc_srgb') ?? undefined,
+                bptc: gl.getExtension('EXT_texture_compression_bptc') ?? undefined,
                 astc: gl.getExtension('WEBGL_compressed_texture_astc') ?? undefined,
-                etc: gl.getExtension('WEBGL_compressed_texture_etc'),
-                etc1: gl.getExtension('WEBGL_compressed_texture_etc1'),
-                pvrtc: gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc'),
-                atc: gl.getExtension('WEBGL_compressed_texture_atc'),
+                etc: gl.getExtension('WEBGL_compressed_texture_etc') ?? undefined,
+                s3tc: gl.getExtension('WEBGL_compressed_texture_s3tc') ?? undefined,
+                s3tc_sRGB: gl.getExtension('WEBGL_compressed_texture_s3tc_srgb') ?? undefined /* eslint-disable-line camelcase */,
+                pvrtc: (gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc')) ?? undefined,
+                etc1: gl.getExtension('WEBGL_compressed_texture_etc1') ?? undefined,
+                atc: gl.getExtension('WEBGL_compressed_texture_atc') ?? undefined,
             };
         }
 

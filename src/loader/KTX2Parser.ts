@@ -289,13 +289,14 @@ export class KTX2Parser {
             }
 
             extensions = {
+                bptc: gl.getExtension('EXT_texture_compression_bptc') ?? undefined,
+                astc: gl.getExtension('WEBGL_compressed_texture_astc') ?? undefined,
+                etc: gl.getExtension('WEBGL_compressed_texture_etc') ?? undefined,
                 s3tc: gl.getExtension('WEBGL_compressed_texture_s3tc') ?? undefined,
                 s3tc_sRGB: gl.getExtension('WEBGL_compressed_texture_s3tc_srgb') ?? undefined /* eslint-disable-line camelcase */,
-                astc: gl.getExtension('WEBGL_compressed_texture_astc') ?? undefined,
-                etc: gl.getExtension('WEBGL_compressed_texture_etc'),
-                etc1: gl.getExtension('WEBGL_compressed_texture_etc1'),
-                pvrtc: gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc'),
-                atc: gl.getExtension('WEBGL_compressed_texture_atc'),
+                pvrtc: (gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc')) ?? undefined,
+                etc1: gl.getExtension('WEBGL_compressed_texture_etc1') ?? undefined,
+                atc: gl.getExtension('WEBGL_compressed_texture_atc') ?? undefined,
             };
         }
 
