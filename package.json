@@ -1,11 +1,10 @@
 {
     "name": "pixi-basis-ktx2",
-    "version": "0.0.21",
+    "version": "0.0.22",
     "description": "Loader for the *.basis & *.ktx2 supercompressed texture file format. This package also ships with the transcoder!",
     "main": "lib/cjs/index.js",
     "module": "lib/esm/index.js",
     "types": "lib/cjs/index.d.ts",
-    "plugin": "dist/pixi-basis-ktx2.js",
     "exports": {
         ".": {
             "import": {
@@ -22,7 +21,6 @@
         "access": "public"
     },
     "files": [
-        "dist/**/*",
         "lib/**/*",
         "assets/**/*"
     ],
@@ -33,16 +31,13 @@
     },
     "scripts": {
         "test": "jest",
-        "clean": "yarn clean:dist && yarn clean:lib",
-        "clean:dist": "rimraf dist",
+        "clean": "yarn clean:lib",
         "clean:lib": "rimraf lib",
         "lint": "yarn eslint src/",
-        "build": "yarn build:dev && yarn build:dev:min && yarn build:esm && yarn build:cjs",
-        "build:dev": "cross-env NODE_ENV=development webpack --config build/webpack.dev.ts",
-        "build:dev:min": "cross-env NODE_ENV=development MINIFY=true webpack --config build/webpack.dev.ts",
+        "build": "yarn && yarn build:esm && yarn build:cjs",
         "build:esm": "tsc -p ./tsconfig.esm.json",
         "build:cjs": "tsc -p ./tsconfig.cjs.json",
-        "publish:npm": "yarn lint && yarn test && yarn clean && yarn build && yarn pack && yarn npm publish"
+        "publish:npm": "yarn lint && yarn test && yarn clean && yarn build && yarn pack && yarn publish"
     },
     "repository": {
         "type": "git",
@@ -61,7 +56,7 @@
         "url": "https://github.com/Sparcks/pixi-basis-ktx2/issues"
     },
     "homepage": "https://github.com/Sparcks/pixi-basis-ktx2#readme",
-    "dependencies": {
+    "peerDependencies": {
         "pixi.js": "^7.x.x"
     },
     "devDependencies": {
@@ -69,7 +64,6 @@
         "@types/node": "^20.11.17",
         "@typescript-eslint/eslint-plugin": "^7.0.1",
         "@typescript-eslint/parser": "^7.0.1",
-        "clean-webpack-plugin": "^4.0.0",
         "cross-env": "^5.2.0",
         "esbuild": "^0.20.0",
         "eslint": "^8.56.0",
@@ -82,21 +76,16 @@
         "jest-extended": "^4.0.2",
         "jest-raw-loader": "^1.0.1",
         "npm-run-all": "^4.1.5",
+        "pixi.js": "^7.x.x",
         "prettier": "^3.2.5",
         "rimraf": "^2.6.3",
         "semver": "^7.3.8",
-        "terser": "^5.27.0",
-        "terser-webpack-plugin": "^5.3.10",
         "ts-jest": "^29.0.1",
         "ts-loader": "^9.5.1",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^3.10.1",
         "typescript": "^5.3.3",
-        "typescript-declaration-webpack-plugin": "^0.3.0",
-        "webpack": "^5.90.1",
-        "webpack-cli": "^5.1.4",
         "workspaces-run": "^1.0.2",
         "yargs-parser": "^21.1.1"
-    },
-    "packageManager": "yarn@4.5.1"
+    }
 }

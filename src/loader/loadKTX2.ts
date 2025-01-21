@@ -64,7 +64,7 @@ extensions.add(loadKTX2);
 
 export async function loadKTX2BufferToTexture(byteArr: Uint8Array, fileName: string, loader: Loader): Promise<Texture | undefined> {
     await TranscoderWorkerKTX2.onTranscoderInitialized;
-    const resources = await KTX2Parser.transcode(byteArr.buffer);
+    const resources = await KTX2Parser.transcode(byteArr.buffer as ArrayBuffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
     const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
     if (!resources || !resources[0]) return undefined;
@@ -82,7 +82,7 @@ export async function loadKTX2BufferToTexture(byteArr: Uint8Array, fileName: str
 
 export async function loadKTX2BufferToArray(byteArr: Uint8Array, fileName: string, loader: Loader): Promise<Texture[]> {
     await TranscoderWorkerKTX2.onTranscoderInitialized;
-    const resources = await KTX2Parser.transcode(byteArr.buffer);
+    const resources = await KTX2Parser.transcode(byteArr.buffer as ArrayBuffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
     const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
 

@@ -64,7 +64,7 @@ extensions.add(loadBasis);
 
 export async function loadBasisBufferToTexture(byteArr: Uint8Array, fileName: string, loader: Loader): Promise<Texture | undefined> {
     await TranscoderWorkerBasis.onTranscoderInitialized;
-    const resources = await BasisParser.transcode(byteArr.buffer);
+    const resources = await BasisParser.transcode(byteArr.buffer as ArrayBuffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
     const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
     if (!resources || !resources[0]) return undefined;
@@ -82,7 +82,7 @@ export async function loadBasisBufferToTexture(byteArr: Uint8Array, fileName: st
 
 export async function loadBasisBufferToArray(byteArr: Uint8Array, fileName: string, loader: Loader): Promise<Texture[]> {
     await TranscoderWorkerBasis.onTranscoderInitialized;
-    const resources = await BasisParser.transcode(byteArr.buffer);
+    const resources = await BasisParser.transcode(byteArr.buffer as ArrayBuffer);
     const type: TYPES | undefined = resources?.basisFormat ? BASIS_FORMAT_TO_TYPE[resources?.basisFormat] : undefined;
     const format: FORMATS = resources?.basisFormat !== BASIS_FORMATS.cTFRGBA32 ? FORMATS.RGB : FORMATS.RGBA;
 

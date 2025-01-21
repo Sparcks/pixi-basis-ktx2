@@ -96,19 +96,3 @@ private async loadTextureFromBuffer(byteArr: Uint8Array, fileName: string): Prom
     const textureBasisArr = loadKTX2BufferToArray(byteArr, fileName, Pixi.Assets.loader); // Texture[]
 }
 ```
-
-## CDN Install
-
-Via jsDelivr:
-
-```html
-<!-- This script tag should be placed after pixi.min.js -->
-<script src="https://cdn.jsdelivr.net/npm/pixi-basis-ktx2@0.x/dist/pixi-basis-ktx2.min.js"></script>
-```
-
-Or via unpkg:
-
-```html
-<!-- This script tag should be placed after pixi.min.js -->
-<script src="https://unpkg.com/pixi-basis-ktx2@0.x/dist/pixi-basis-ktx2.min.js"></script>
-```

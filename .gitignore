@@ -28,7 +28,6 @@ lerna-debug.log
 *__temp
 node_modules
 .nyc_output
-dist
 lib
 
 # jetBrains IDE ignores

@@ -20,7 +20,7 @@
         "types": ["jest", "node"]
     },
     "include": ["src/**/*.ts"],
-    "exclude": ["node_modules/**", "dist/**", "lib/**", "test/**uild/**", "loaders/**"],
+    "exclude": ["node_modules/**", "lib/**", "test/**uild/**", "loaders/**"],
     "ts-node": {
         "files": true,
         "compilerOptions": {

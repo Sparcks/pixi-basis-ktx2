@@ -39,6 +39,6 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: ['@typescript-eslint'],
-    ignorePatterns: ['node_modules/**', 'dist/**', 'lib/**', 'assets/**', 'types/**', 'loaders/**', 'build/**', 'test/**'],
+    ignorePatterns: ['node_modules/**', 'lib/**', 'assets/**', 'types/**', 'loaders/**', 'build/**', 'test/**'],
     rules: {},
 };
