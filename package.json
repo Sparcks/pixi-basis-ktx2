@@ -18,7 +18,8 @@
         }
     },
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     },
     "files": [
         "lib/**/*",
@@ -37,7 +38,7 @@
         "build": "yarn && yarn build:esm && yarn build:cjs",
         "build:esm": "tsc -p ./tsconfig.esm.json",
         "build:cjs": "tsc -p ./tsconfig.cjs.json",
-        "publish:npm": "yarn lint && yarn test && yarn clean && yarn build && yarn pack && yarn publish"
+        "publish:npm": "yarn lint && yarn test && yarn clean && yarn build && yarn pack && npm login && npm publish"
     },
     "repository": {
         "type": "git",

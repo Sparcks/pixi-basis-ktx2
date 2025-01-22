@@ -1,7 +1,6 @@
 {
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
-        "lib": ["ESNext", "DOM"],
         "target": "ESNext",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",

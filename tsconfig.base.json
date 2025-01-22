@@ -5,12 +5,15 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
-        "checkJs": true,
         "allowJs": true,
         "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "experimentalDecorators": true,
         "declaration": true,
         "declarationMap": true,
-        "allowSyntheticDefaultImports": true
+        "typeRoots": ["../node_modules/@types/", "./types/"],
+        "lib": ["DOM", "ES5", "ES6", "ES2015", "ES2016", "ES2017", "ES2018", "ES2019", "ES2020", "ES2021", "ES2022"]
     },
     "include": ["src/**/*"]
 }
