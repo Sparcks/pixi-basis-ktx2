@@ -3,11 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CompressedTextureResource } from '@pixi/compressed-textures';
 import { BufferResource, settings, TYPES } from '@pixi/core';
-import { BASIS_FORMAT_TO_INTERNAL_FORMAT, BASIS_FORMATS, BASIS_FORMATS_ALPHA, INTERNAL_FORMAT_TO_BASIS_FORMAT } from '../Basis';
-import { TranscoderWorkerBasis } from '../TranscoderWorkerBasis';
-import type { BasisBinding, BasisTextureExtensions, TranscodedResourcesArray } from '../Basis';
+import { BASIS_FORMAT_TO_INTERNAL_FORMAT, BASIS_FORMATS, BASIS_FORMATS_ALPHA, INTERNAL_FORMAT_TO_BASIS_FORMAT } from '../compressions';
+import { TranscoderWorkerBasis } from '../transcoderWorkerBasis';
+import type { BasisBinding, BasisTextureExtensions, TranscodedResourcesArray } from '../compressions';
 import type { CompressedLevelBuffer, INTERNAL_FORMATS } from '@pixi/compressed-textures';
-import { ITranscodeResponse } from '../TranscoderWorkerInterfaces';
+import { ITranscodeResponse } from '../transcoderWorkerInterfaces';
 
 /**
  * Loader plugin for handling BASIS supercompressed texture files.
@@ -80,7 +80,7 @@ export class BasisParser {
         const workerPool = BasisParser.workerPool;
 
         let leastLoad = 0x10000000;
-        let worker = null;
+        let worker: TranscoderWorkerBasis | null = null;
 
         for (let i = 0, j = workerPool.length; i < j; i++) {
             if (workerPool[i].load < leastLoad) {
@@ -90,9 +90,7 @@ export class BasisParser {
         }
 
         if (!worker) {
-            /* eslint-disable-next-line no-use-before-define */
             worker = new TranscoderWorkerBasis();
-
             workerPool.push(worker);
         }
 

@@ -3,12 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CompressedTextureResource } from '@pixi/compressed-textures';
 import { BufferResource, settings, TYPES } from '@pixi/core';
-import { BASIS_FORMAT_TO_INTERNAL_FORMAT, BASIS_FORMATS, BASIS_FORMATS_ALPHA, INTERNAL_FORMAT_TO_BASIS_FORMAT } from '../Basis';
-import { TranscoderWorkerKTX2 } from '../TranscoderWorkerKTX2';
+import { BASIS_FORMAT_TO_INTERNAL_FORMAT, BASIS_FORMATS, BASIS_FORMATS_ALPHA, INTERNAL_FORMAT_TO_BASIS_FORMAT } from '../compressions';
+import { TranscoderWorkerKTX2 } from '../transcoderWorkerKTX2';
 
 import type { CompressedLevelBuffer, INTERNAL_FORMATS } from '@pixi/compressed-textures';
-import type { BasisBinding, BasisTextureExtensions, TranscodedResourcesArray } from '../Basis';
-import { ITranscodeResponse } from '../TranscoderWorkerInterfaces';
+import type { BasisBinding, BasisTextureExtensions, TranscodedResourcesArray } from '../compressions';
+import { ITranscodeResponse } from '../transcoderWorkerInterfaces';
 
 /**
  * Loader plugin for handling KTX2 supercompressed texture files.
@@ -81,7 +81,7 @@ export class KTX2Parser {
         const workerPool = KTX2Parser.workerPool;
 
         let leastLoad = 0x10000000;
-        let worker = null;
+        let worker: TranscoderWorkerKTX2 | null = null;
 
         for (let i = 0, j = workerPool.length; i < j; i++) {
             if (workerPool[i].load < leastLoad) {
@@ -91,9 +91,7 @@ export class KTX2Parser {
         }
 
         if (!worker) {
-            /* eslint-disable-next-line no-use-before-define */
             worker = new TranscoderWorkerKTX2();
-
             workerPool.push(worker);
         }
 

@@ -1,5 +1,5 @@
-export * from './Basis';
+export * from './compressions';
 export * from './loader';
-export * from './TranscoderWorkerBasis';
-export * from './TranscoderWorkerKTX2';
-
+export * from './utils';
+export * from './transcoderWorkerBasis';
+export * from './transcoderWorkerKTX2';

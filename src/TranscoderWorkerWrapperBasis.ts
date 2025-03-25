@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { BasisBinding } from './Basis';
-import { IInitializeTranscoderMessage, ITranscodeMessage, ITranscodeResponse, ITranscodedImage } from './TranscoderWorkerInterfaces';
+import type { BasisBinding } from './compressions';
+import { IInitializeTranscoderMessage, ITranscodeMessage, ITranscodeResponse, ITranscodedImage } from './transcoderWorkerInterfaces';
 
 /**
  * This wraps the transcoder web-worker functionality; it can be converted into a string to get the source code. It expects

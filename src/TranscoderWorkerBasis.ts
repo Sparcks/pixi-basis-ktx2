@@ -1,7 +1,7 @@
-import { TranscoderWorkerWrapperBasis } from './TranscoderWorkerWrapperBasis';
+import { TranscoderWorkerWrapperBasis } from './transcoderWorkerWrapperBasis';
 
-import type { BASIS_FORMATS } from './Basis';
-import { ITranscodeResponse } from './TranscoderWorkerInterfaces';
+import type { BASIS_FORMATS } from './compressions';
+import { ITranscodeResponse } from './transcoderWorkerInterfaces';
 
 /**
  * Worker class for transcoding *.basis files in background threads.

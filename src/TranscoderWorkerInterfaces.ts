@@ -1,5 +1,5 @@
 import { CompressedLevelBuffer } from '@pixi/compressed-textures';
-import { BASIS_FORMATS } from './Basis';
+import { BASIS_FORMATS } from './compressions';
 
 /**
  * Initialization message sent by the main thread.
